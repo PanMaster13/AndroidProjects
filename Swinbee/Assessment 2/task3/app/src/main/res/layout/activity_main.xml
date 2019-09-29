@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/background">
+
+    <ImageView
+        android:id="@+id/mainImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/burger_main" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        android:layout_margin="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainImage"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/underTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.39"/>
+
+    <ImageView
+        android:id="@+id/proteinImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/underTitle"
+        app:srcCompat="@drawable/meat"
+        android:maxWidth="50dp"
+        android:maxHeight="50dp"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/protein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/protein"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:layout_margin="5dp"
+        app:layout_constraintLeft_toRightOf="@id/proteinImg"
+        app:layout_constraintTop_toBottomOf="@id/underTitle"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"/>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/line"
+        app:layout_constraintLeft_toRightOf="@id/protein"
+        app:layout_constraintTop_toBottomOf="@id/underTitle"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/protein"
+        android:layout_marginTop="15dp">
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/beef"
+            android:layout_marginRight="5dp"/>
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/chicken"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fish"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/egg"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="50dp"/>
+
+    </RadioGroup>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/underProtein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <ImageView
+        android:id="@+id/fiberImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/underProtein"
+        app:srcCompat="@drawable/salad"
+        android:maxHeight="50dp"
+        android:maxWidth="50dp"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/fiber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fiber"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:layout_margin="5dp"
+        app:layout_constraintLeft_toRightOf="@id/fiberImg"
+        app:layout_constraintTop_toBottomOf="@id/underProtein"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/line"
+        app:layout_constraintLeft_toRightOf="@id/fiber"
+        app:layout_constraintTop_toBottomOf="@id/underProtein"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/checkboxGroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.56"/>
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lettuce"
+        app:layout_constraintTop_toBottomOf="@id/checkboxGroup1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="30dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tomato"
+        app:layout_constraintTop_toBottomOf="@id/checkboxGroup1"
+        app:layout_constraintLeft_toRightOf="@id/checkBox1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pickle"
+        app:layout_constraintTop_toBottomOf="@id/checkboxGroup1"
+        app:layout_constraintLeft_toRightOf="@id/checkBox2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBox4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/onion"
+        app:layout_constraintTop_toBottomOf="@id/checkboxGroup1"
+        app:layout_constraintLeft_toRightOf="@id/checkBox3"
+        android:layout_marginLeft="10dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/underFiber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.62"/>
+
+    <ImageView
+        android:id="@+id/fatImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/cheese2"
+        app:layout_constraintTop_toBottomOf="@id/underFiber"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:maxWidth="50dp"
+        android:maxHeight="50dp"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/fat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fat"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:layout_margin="5dp"
+        app:layout_constraintLeft_toRightOf="@id/fatImg"
+        app:layout_constraintTop_toBottomOf="@id/underFiber"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/line"
+        app:layout_constraintLeft_toRightOf="@id/fat"
+        app:layout_constraintTop_toBottomOf="@id/underFiber"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/checkboxGroup2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.68"/>
+
+    <CheckBox
+        android:id="@+id/checkBox5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cheese"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkboxGroup2"
+        android:layout_marginLeft="30dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBox6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mayo"
+        app:layout_constraintLeft_toRightOf="@id/checkBox5"
+        app:layout_constraintTop_toBottomOf="@id/checkboxGroup2"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBox7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mustard"
+        app:layout_constraintLeft_toRightOf="@id/checkBox6"
+        app:layout_constraintTop_toBottomOf="@id/checkboxGroup2"
+        android:layout_marginLeft="30dp"/>
+
+    <View
+        android:id="@+id/ingredientEnd"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkBox6"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/size"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ingredientEnd"/>
+
+    <Spinner
+        android:id="@+id/sizeSelection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toRightOf="@id/size"
+        app:layout_constraintTop_toBottomOf="@id/ingredientEnd"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RM0.00"
+        android:textSize="20sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:textStyle="bold"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/priceBackground"
+        android:padding="5dp"
+        android:paddingEnd="50dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ingredientEnd"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/buttonGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.82"/>
+
+    <Button
+        android:id="@+id/order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/order"
+        android:textSize="16sp"
+        android:textColor="@color/buttonText"
+        android:background="@color/button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/reset"
+        app:layout_constraintTop_toBottomOf="@id/buttonGroup"/>
+
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reset"
+        android:textSize="16sp"
+        android:textColor="@color/buttonText"
+        android:background="@color/button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/order"
+        app:layout_constraintTop_toBottomOf="@id/buttonGroup"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

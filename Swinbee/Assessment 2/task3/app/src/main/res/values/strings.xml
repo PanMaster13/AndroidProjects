@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Burger Queen</string>
+    <string name="title">Choose Your Own Ingredient</string>
+
+    <string name="protein">Protein</string>
+    <string name="beef">Beef</string>
+    <string name="chicken">Chicken</string>
+    <string name="fish">Fish</string>
+    <string name="egg">Egg</string>
+
+    <string name="fiber">Fiber</string>
+    <string name="lettuce">Lettuce</string>
+    <string name="tomato">Tomato</string>
+    <string name="pickle">Pickle</string>
+    <string name="onion">Onion</string>
+
+    <string name="fat">Unhealthy But Yummy Fat</string>
+    <string name="cheese">Cheese</string>
+    <string name="mayo">Mayonaise</string>
+    <string name="mustard">Mustard</string>
+
+    <string name="size">Size</string>
+    <string-array name="size_array">
+        <item>Small</item>
+        <item>Regular</item>
+        <item>Large</item>
+        <item>Gigantic</item>
+    </string-array>
+
+    <string name="order">Order</string>
+    <string name="reset">Reset</string>
+</resources>
