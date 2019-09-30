@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="addTitle">Адрес</string>
+    <string name="ambience">атмосфера</string>
+    <string name="drinks">напитки</string>
+    <string name="food">" питание"</string>
+    <string name="review">" отзывы"</string>
+    <string name="service">обслуживание</string>
+    <string name="subTitle">" КУХНЯ: Fusion"</string>
+    <string name="time">Понедельник - воскресенье | 10.00 - 23.00</string>
+    <string name="timeTitle">часы работы</string>
+    <string name="app_name">" Кафе Обзор"</string>
+</resources>

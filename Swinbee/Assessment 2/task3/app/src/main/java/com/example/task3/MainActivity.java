@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final RadioGroup group = findViewById(R.id.radioGroup);
 
         final RadioButton beef = findViewById(R.id.radioButton1);
         final RadioButton chicken = findViewById(R.id.radioButton2);
@@ -262,10 +265,7 @@ public class MainActivity extends AppCompatActivity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                beef.setChecked(false);
-                chicken.setChecked(false);
-                fish.setChecked(false);
-                egg.setChecked(false);
+                group.clearCheck();
 
                 lettuce.setChecked(false);
                 tomato.setChecked(false);
@@ -278,12 +278,16 @@ public class MainActivity extends AppCompatActivity {
 
                 spinner.setSelection(0);
 
+                // Set fiber checkbox to default
+                fiberBonusState = true;
+                checkBoxCounter = 0;
+                checkFiberLimit();
+                fiberBonusState = false;
+
                 // Set values to their defaults
                 proteinPrice = 0.0;
                 fiberPrice = 0.0;
                 fatPrice = 0.0;
-                checkBoxCounter = 0;
-                fiberBonusState = false;
                 proteinSelectedStatus = false;
 
                 // Recalculate default
