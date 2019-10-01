@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     double proteinPrice = 0.0;
@@ -249,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(sizeValue.equals("Gigantic"))
                 {
-                    sizeMultiplier = 1.4;
+                    sizeMultiplier = 1.5;
                     setPrice();
                 }
             }
@@ -308,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    text = String.format("Amount to be paid: RM%.2f", result);
+                    text = String.format(Locale.ENGLISH, "Amount to be paid: RM%.2f", result);
                 }
 
                 // Toast is a simple UI feedback that works similarly to Alert Boxes in JavaScript

@@ -22,13 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sneeze_btn = findViewById(R.id.button_sneeze);
-        nose_btn = findViewById(R.id.button_nose);
-        medication_btn = findViewById(R.id.button_medication);
-
-        sneeze_player = MediaPlayer.create(this, R.raw.sneeze2);
-        nose_player = MediaPlayer.create(this, R.raw.blow_nose);
-        medication_player = MediaPlayer.create(this, R.raw.slurp);
+        init();
 
         sneeze_btn.setOnClickListener(new View.OnClickListener()
         {
@@ -42,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     health = 0;
                 }
                 Log.d("HEALTH", String.valueOf(health));
+                counter = 1;
                 checkHealth();
             }
         });
@@ -53,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 nose_player.start();
                 Log.d("HEALTH", String.valueOf(health));
+                counter = 0;
                 checkHealth();
             }
         });
@@ -92,36 +88,37 @@ public class MainActivity extends AppCompatActivity {
             }
             Log.d("HEALTH", String.valueOf(health));
             checkHealth();
-            counter++;
+            counter = 1;
         }
         else if (counter == 1)
         {
             nose_player.start();
             Log.d("HEALTH", String.valueOf(health));
             checkHealth();
-            counter++;
-        }
-        else if (counter == 2)
-        {
-            medication_player.start();
-            health = health + 2;
-            if (health > 10)
-            {
-                health = 10;
-            }
-            Log.d("HEALTH", String.valueOf(health));
-            checkHealth();
             counter = 0;
         }
-
     }
 
+    // Method that initialises button and media player variables
+    public void init()
+    {
+        sneeze_btn = findViewById(R.id.button_sneeze);
+        nose_btn = findViewById(R.id.button_nose);
+        medication_btn = findViewById(R.id.button_medication);
+
+        sneeze_player = MediaPlayer.create(this, R.raw.sneeze2);
+        nose_player = MediaPlayer.create(this, R.raw.blow_nose);
+        medication_player = MediaPlayer.create(this, R.raw.slurp);
+    }
+
+    // Method that changes background color
     public void setActivityBackground(int color)
     {
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(color);
     }
 
+    // Method that check health and changes color accordingly
     public void checkHealth()
     {
         if (health <= 5)
