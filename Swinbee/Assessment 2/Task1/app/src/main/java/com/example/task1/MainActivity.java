@@ -22,7 +22,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        init();
+        sneeze_btn = findViewById(R.id.button_sneeze);
+        nose_btn = findViewById(R.id.button_nose);
+        medication_btn = findViewById(R.id.button_medication);
+
+        sneeze_player = MediaPlayer.create(this, R.raw.sneeze2);
+        nose_player = MediaPlayer.create(this, R.raw.blow_nose);
+        medication_player = MediaPlayer.create(this, R.raw.slurp);
 
         sneeze_btn.setOnClickListener(new View.OnClickListener()
         {
@@ -97,18 +103,6 @@ public class MainActivity extends AppCompatActivity {
             checkHealth();
             counter = 0;
         }
-    }
-
-    // Method that initialises button and media player variables
-    public void init()
-    {
-        sneeze_btn = findViewById(R.id.button_sneeze);
-        nose_btn = findViewById(R.id.button_nose);
-        medication_btn = findViewById(R.id.button_medication);
-
-        sneeze_player = MediaPlayer.create(this, R.raw.sneeze2);
-        nose_player = MediaPlayer.create(this, R.raw.blow_nose);
-        medication_player = MediaPlayer.create(this, R.raw.slurp);
     }
 
     // Method that changes background color

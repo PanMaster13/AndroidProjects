@@ -7,8 +7,8 @@
     <string name="time">Monday - Sunday | 10:00 am - 11:00 pm</string>
     <string name="address" translatable="false">The Old Court House, Jalan Tun Abang Haji Openg, Kuching, 93000 Kuching, Sarawak</string>
     <string name="review">Reviews</string>
+    <string name="food">Food</string>
     <string name="drinks">Drinks</string>
     <string name="service">Service</string>
     <string name="ambience">Ambience</string>
-    <string name="food">food</string>
 </resources>
