@@ -1,4 +1,4 @@
-package com.example.task21new;
+package com.example.task21;
 
 import androidx.appcompat.app.AppCompatActivity;
 
