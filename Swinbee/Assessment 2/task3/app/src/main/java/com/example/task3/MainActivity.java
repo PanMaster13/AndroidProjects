@@ -2,6 +2,7 @@ package com.example.task3;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -15,9 +16,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+
+    // All fiber ingredients have the same amount
+    final double FIBER_AMOUNT = 0.5;
 
     double proteinPrice = 0.0;
     double fiberPrice = 0.0;
@@ -32,193 +37,77 @@ public class MainActivity extends AppCompatActivity {
     // For Order Checking
     boolean proteinSelectedStatus = false;
 
+    // Contains the price for each ingredient (e.g. beef, lettuce)
+    HashMap<String, Double> ingredientPrice = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Declaring View variables
+        // Radio group for protein section
         final RadioGroup group = findViewById(R.id.radioGroup);
 
+        // Protein radio buttons
         final RadioButton beef = findViewById(R.id.radioButton1);
         final RadioButton chicken = findViewById(R.id.radioButton2);
         final RadioButton fish = findViewById(R.id.radioButton3);
         final RadioButton egg = findViewById(R.id.radioButton4);
 
+        // Fiber checkboxes
         final CheckBox lettuce = findViewById(R.id.checkBox1);
         final CheckBox tomato = findViewById(R.id.checkBox2);
         final CheckBox pickle = findViewById(R.id.checkBox3);
         final CheckBox onion = findViewById(R.id.checkBox4);
 
+        // Fat checkboxes
         final CheckBox cheese = findViewById(R.id.checkBox5);
         final CheckBox mayo = findViewById(R.id.checkBox6);
         final CheckBox mustard = findViewById(R.id.checkBox7);
 
+        // Order and reset button
         final Button order = findViewById(R.id.order);
         final Button reset = findViewById(R.id.reset);
 
+        // Setting ingredients and their respective prices
+        // Protein Section
+        ingredientPrice.put("Beef", 4.50);
+        ingredientPrice.put("Chicken", 3.00);
+        ingredientPrice.put("Fish", 4.00);
+        ingredientPrice.put("Egg", 2.00);
+        // Fiber Section
+        ingredientPrice.put("Lettuce", FIBER_AMOUNT);
+        ingredientPrice.put("Tomato", FIBER_AMOUNT);
+        ingredientPrice.put("Pickle", FIBER_AMOUNT);
+        ingredientPrice.put("Onion", FIBER_AMOUNT);
+        // Fat Section
+        ingredientPrice.put("Mustard", 0.70);
+        ingredientPrice.put("Cheese", 1.00);
+        ingredientPrice.put("Mayo", 0.50);
+        // Size Section
+        ingredientPrice.put("Small", 1.0);
+        ingredientPrice.put("Regular", 1.2);
+        ingredientPrice.put("Large", 1.3);
+        ingredientPrice.put("Gigantic", 1.5);
+
+        // Creating on click listeners
         // ----------------------Protein Section-------------------------------
-        beef.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                proteinPrice = 4.5;
-                setPrice();
-                proteinSelectedStatus = true;
-            }
-        });
-
-        chicken.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                proteinPrice = 3.0;
-                setPrice();
-                proteinSelectedStatus = true;
-            }
-        });
-
-        fish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                proteinPrice = 4.0;
-                setPrice();
-                proteinSelectedStatus = true;
-            }
-        });
-
-        egg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                proteinPrice = 2.0;
-                setPrice();
-                proteinSelectedStatus = true;
-            }
-        });
+        createProteinButtonListener(beef, ingredientPrice.get("Beef"));
+        createProteinButtonListener(chicken, ingredientPrice.get("Chicken"));
+        createProteinButtonListener(fish, ingredientPrice.get("Fish"));
+        createProteinButtonListener(egg, ingredientPrice.get("Egg"));
 
         // ---------------------Fiber Section--------------------------------
-        lettuce.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (lettuce.isChecked())
-                {
-                    fiberPrice = fiberPrice + 0.5;
-                    checkBoxCounter++;
-                    checkFiberLimit();
-                }
-                else if(!lettuce.isChecked())
-                {
-                    fiberPrice = fiberPrice - 0.5;
-                    checkBoxCounter--;
-                    checkFiberLimit();
-                }
-                setPrice();
-            }
-        });
-
-        tomato.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (tomato.isChecked())
-                {
-                    fiberPrice = fiberPrice + 0.5;
-                    checkBoxCounter++;
-                    checkFiberLimit();
-                }
-                else if(!tomato.isChecked())
-                {
-                    fiberPrice = fiberPrice - 0.5;
-                    checkBoxCounter--;
-                    checkFiberLimit();
-                }
-                setPrice();
-            }
-        });
-
-        pickle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (pickle.isChecked())
-                {
-                    fiberPrice = fiberPrice + 0.5;
-                    checkBoxCounter++;
-                    checkFiberLimit();
-                }
-                else if (!pickle.isChecked())
-                {
-                    fiberPrice = fiberPrice - 0.5;
-                    checkBoxCounter--;
-                    checkFiberLimit();
-                }
-                setPrice();
-            }
-        });
-
-        onion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onion.isChecked())
-                {
-                    fiberPrice = fiberPrice + 0.5;
-                    checkBoxCounter++;
-                    checkFiberLimit();
-                }
-                else if (!onion.isChecked())
-                {
-                    fiberPrice = fiberPrice - 0.5;
-                    checkBoxCounter--;
-                    checkFiberLimit();
-                }
-                setPrice();
-            }
-        });
+        createFiberButtonListener(lettuce, ingredientPrice.get("Lettuce"));
+        createFiberButtonListener(tomato, ingredientPrice.get("Tomato"));
+        createFiberButtonListener(pickle, ingredientPrice.get("Pickle"));
+        createFiberButtonListener(onion, ingredientPrice.get("Onion"));
 
         // ---------------------------Fat Section-------------------------------
-        cheese.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (cheese.isChecked())
-                {
-                    fatPrice = fatPrice + 1.0;
-                }
-                else if (!cheese.isChecked())
-                {
-                    fatPrice = fatPrice - 1.0;
-                }
-                setPrice();
-            }
-        });
-
-        mayo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mayo.isChecked())
-                {
-                    fatPrice = fatPrice + 0.5;
-                }
-                else if(!mayo.isChecked())
-                {
-                    fatPrice = fatPrice - 0.5;
-                }
-                setPrice();
-            }
-        });
-
-        mustard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mustard.isChecked())
-                {
-                    fatPrice = fatPrice + 0.7;
-                }
-                else if(!mustard.isChecked())
-                {
-                    fatPrice = fatPrice - 0.7;
-                }
-                setPrice();
-            }
-        });
-
-
+        createFatButtonListener(mustard, ingredientPrice.get("Mustard"));
+        createFatButtonListener(cheese, ingredientPrice.get("Cheese"));
+        createFatButtonListener(mayo, ingredientPrice.get("Mayo"));
 
         // Generate Dropdown Selection List
         final Spinner spinner = findViewById(R.id.sizeSelection);
@@ -236,22 +125,22 @@ public class MainActivity extends AppCompatActivity {
                 String sizeValue = (String)adapterView.getItemAtPosition(position);
                 if (sizeValue.equals("Small")) // String values are compared with .equals built-in function
                 {
-                    sizeMultiplier = 1.0;
+                    sizeMultiplier = ingredientPrice.get("Small");
                     setPrice();
                 }
                 else if(sizeValue.equals("Regular"))
                 {
-                    sizeMultiplier = 1.2;
+                    sizeMultiplier = ingredientPrice.get("Regular");
                     setPrice();
                 }
                 else if(sizeValue.equals("Large"))
                 {
-                    sizeMultiplier = 1.3;
+                    sizeMultiplier = ingredientPrice.get("Large");
                     setPrice();
                 }
                 else if(sizeValue.equals("Gigantic"))
                 {
-                    sizeMultiplier = 1.5;
+                    sizeMultiplier = ingredientPrice.get("Gigantic");
                     setPrice();
                 }
             }
@@ -366,6 +255,61 @@ public class MainActivity extends AppCompatActivity {
         TextView priceText = findViewById(R.id.price);
 
         result = (proteinPrice + fiberPrice + fatPrice) * sizeMultiplier;
-        priceText.setText(String.format("RM%.2f", result));
+        priceText.setText(String.format(Locale.ENGLISH, "RM%.2f", result));
+    }
+
+    // Creates button listener for protein section
+    public void createProteinButtonListener(RadioButton btn, final double value)
+    {
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                proteinPrice = value;
+                setPrice();
+                proteinSelectedStatus = true;
+            }
+        });
+    }
+
+    // Creates button listener for fiber section
+    public void createFiberButtonListener(final CheckBox btn, final double value)
+    {
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (btn.isChecked())
+                {
+                    fiberPrice = fiberPrice + value;
+                    checkBoxCounter++;
+                    checkFiberLimit();
+                }
+                else if(!btn.isChecked())
+                {
+                    fiberPrice = fiberPrice - value;
+                    checkBoxCounter--;
+                    checkFiberLimit();
+                }
+                setPrice();
+            }
+        });
+    }
+
+    // Creates button listener for fat section
+    public void createFatButtonListener(final CheckBox btn, final double value)
+    {
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (btn.isChecked())
+                {
+                    fatPrice = fatPrice + value;
+                }
+                else if (!btn.isChecked())
+                {
+                    fatPrice = fatPrice - value;
+                }
+                setPrice();
+            }
+        });
     }
 }
