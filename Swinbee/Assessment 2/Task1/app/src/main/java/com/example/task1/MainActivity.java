@@ -2,6 +2,7 @@ package com.example.task1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,15 +37,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                sneeze_player.start();
-                health--;
-                if (health < 0)
-                {
-                    health = 0;
-                }
-                Log.d("HEALTH", String.valueOf(health));
-                counter = 1;
-                checkHealth();
+                // 1 means sneeze player
+                playSound(sneeze_player, 1);
             }
         });
 
@@ -52,10 +47,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                nose_player.start();
-                Log.d("HEALTH", String.valueOf(health));
-                counter = 0;
-                checkHealth();
+                // 2 means nose player
+                playSound(nose_player, 2);
             }
         });
 
@@ -63,14 +56,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                medication_player.start();
-                health = health + 2;
-                if (health > 10)
-                {
-                    health = 10;
-                }
-                Log.d("HEALTH", String.valueOf(health));
-                checkHealth();
+                // 3 means medication player
+                playSound(medication_player, 3);
             }
         });
     }
@@ -86,30 +73,49 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         if (counter == 0)
         {
-            sneeze_player.start();
-            health--;
-            if (health < 0)
-            {
-                health = 0;
-            }
-            Log.d("HEALTH", String.valueOf(health));
-            checkHealth();
-            counter = 1;
+            // 1 means sneeze player
+            playSound(sneeze_player, 1);
         }
         else if (counter == 1)
         {
-            nose_player.start();
-            Log.d("HEALTH", String.valueOf(health));
-            checkHealth();
-            counter = 0;
+            // 2 means nose player
+            playSound(nose_player, 2);
         }
     }
 
-    // Method that changes background color
-    public void setActivityBackground(int color)
+    // Method that plays appropriate sound and make some back end changes depending on which sound plays
+    // playerType [1 = sneeze, 2 = blow nose, 3 = medication]
+    public void playSound(MediaPlayer player, int playerType)
     {
-        View view = this.getWindow().getDecorView();
-        view.setBackgroundColor(color);
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        CharSequence text;
+
+        player.start();
+        if (playerType == 1) {
+            health--;
+            if (health < 0) {
+                health = 0;
+            }
+            counter = 1;
+        }
+        else if (playerType == 2)
+        {
+            counter = 0;
+        }
+        else if (playerType == 3)
+        {
+            health = health + 2;
+            if (health > 10)
+            {
+                health = 10;
+            }
+        }
+        text = "Health: " + health;
+        checkHealth();
+        Log.d("HEALTH", String.valueOf(health));
+        Toast msg = Toast.makeText(context, text, duration);
+        msg.show();
     }
 
     // Method that check health and changes color accordingly
@@ -127,5 +133,12 @@ public class MainActivity extends AppCompatActivity {
         {
             setActivityBackground(Color.WHITE);
         }
+    }
+
+    // Method that changes background color
+    public void setActivityBackground(int color)
+    {
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(color);
     }
 }
