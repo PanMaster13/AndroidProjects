@@ -28,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(moviesAdapter);
 
-        Movie movie = new Movie("Avengers: Endgame", "Action, Adventure, Sci-Fi", "3 hours");
+        Movie movie = new Movie("Avengers: Endgame", "Action, Adventure, Sci-Fi", "3 hours", R.drawable.avengers);
+        movieList.add(movie);
+        movie = new Movie("$7 Meters Down", "Adventure, Drama, Horror", "2 hours 30 mins", R.drawable.meters);
         movieList.add(movie);
 
         moviesAdapter.notifyDataSetChanged();

@@ -44,12 +44,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         Movie movie = movieList.get(position);
         holder.title.setText(movie.getTitle());
         holder.genre.setText(movie.getGenre());
+        holder.image.setImageResource(movie.getImage());
         holder.duration.setText(movie.getDuration());
-
-        if (movie.getTitle().equals("Avengers: Endgame")){
-            holder.image.setImageResource(R.drawable.avengers);
-        }
-
     }
 
     @Override

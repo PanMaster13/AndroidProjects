@@ -5,13 +5,16 @@ public class Movie {
     private String genre;
     private String duration;
 
+    private int image;
+
     public Movie() {
     }
 
-    public Movie(String title, String genre, String duration) {
+    public Movie(String title, String genre, String duration, int image) {
         this.title = title;
         this.genre = genre;
         this.duration = duration;
+        this.image = image;
     }
 
     public String getTitle() {
@@ -36,5 +39,13 @@ public class Movie {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 }
