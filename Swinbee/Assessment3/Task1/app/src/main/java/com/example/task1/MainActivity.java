@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private List<Movie> movieList = new ArrayList<>();
+    private  ArrayList<Movie> movieList;
     private  RecyclerView recyclerView;
     private  MoviesAdapter moviesAdapter;
 
@@ -21,18 +21,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        movieList = Movie.createMovieList();
+        setRecyclerView();
+    }
+
+    private void setRecyclerView(){
         recyclerView = findViewById(R.id.movie_recycle_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
         moviesAdapter = new MoviesAdapter(movieList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(moviesAdapter);
-
-        Movie movie = new Movie("Avengers: Endgame", "Action, Adventure, Sci-Fi", "3 hours", R.drawable.avengers);
-        movieList.add(movie);
-        movie = new Movie("$7 Meters Down", "Adventure, Drama, Horror", "2 hours 30 mins", R.drawable.meters);
-        movieList.add(movie);
-
-        moviesAdapter.notifyDataSetChanged();
     }
 }
