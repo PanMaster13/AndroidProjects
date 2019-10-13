@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/selected_movie_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/selected_movie_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Title"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toRightOf="@+id/selected_movie_image"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        />
+
+    <TextView
+        android:id="@+id/selected_movie_genre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Genre"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toRightOf="@+id/selected_movie_image"
+        app:layout_constraintTop_toBottomOf="@+id/selected_movie_title"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        />
+
+    <ImageView
+        android:id="@+id/selected_clock_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toRightOf="@+id/selected_movie_image"
+        app:layout_constraintTop_toBottomOf="@+id/selected_movie_genre"
+        app:srcCompat="@drawable/clock" />
+
+    <TextView
+        android:id="@+id/selected_movie_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Duration"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toRightOf="@+id/selected_clock_icon"
+        app:layout_constraintTop_toBottomOf="@+id/selected_movie_genre"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:id="@+id/dateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selected_movie_image"/>
+
+    <EditText
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Date"
+        android:clickable="true"
+        android:inputType="date"
+        android:focusable="false"
+
+        android:drawableRight="@drawable/calendar_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateTitle"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

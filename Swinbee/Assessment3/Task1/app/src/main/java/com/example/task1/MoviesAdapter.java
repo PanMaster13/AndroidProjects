@@ -1,5 +1,6 @@
 package com.example.task1;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
     private List<Movie> movieList;
+    private AdapterCallBack adapterCallBack;
 
     public class MyViewHolder extends  RecyclerView.ViewHolder{
         public TextView title, genre, duration;
@@ -27,9 +29,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         }
     }
 
-    public MoviesAdapter (List<Movie> movieList){
+    public MoviesAdapter (List<Movie> movieList, Context context){
         this.movieList = movieList;
+        try {
+            this.adapterCallBack = ((AdapterCallBack) context);
+        } catch (ClassCastException e){
+            throw new ClassCastException("Activity must implement AdapterCallBack.");
+        }
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,16 +48,26 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         Movie movie = movieList.get(position);
         holder.title.setText(movie.getTitle());
         holder.genre.setText(movie.getGenre());
         holder.image.setImageResource(movie.getImage());
         holder.duration.setText(movie.getDuration());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapterCallBack.onMethodCallBack(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return movieList.size();
+    }
+
+    public interface  AdapterCallBack{
+        void onMethodCallBack(int position);
     }
 }
