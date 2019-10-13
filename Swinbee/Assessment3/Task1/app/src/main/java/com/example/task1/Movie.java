@@ -9,17 +9,19 @@ public class Movie implements Parcelable {
     private String title;
     private String genre;
     private String duration;
+    private int showtimes;
 
     private int image;
 
     public Movie() {
     }
 
-    public Movie(String title, String genre, String duration, int image) {
+    public Movie(String title, String genre, String duration, int image, int showtimes) {
         this.title = title;
         this.genre = genre;
         this.duration = duration;
         this.image = image;
+        this.showtimes = showtimes;
     }
 
     protected Movie(Parcel in) {
@@ -27,6 +29,7 @@ public class Movie implements Parcelable {
         genre = in.readString();
         duration = in.readString();
         image = in.readInt();
+        showtimes = in.readInt();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -73,13 +76,21 @@ public class Movie implements Parcelable {
         this.image = image;
     }
 
-    public static ArrayList<Movie> createMovieList(){
+    public int getShowtimes() {
+        return showtimes;
+    }
+
+    public void setShowtimes(int showtimes) {
+        this.showtimes = showtimes;
+    }
+
+    public static ArrayList<Movie> createMovieList(){ ;
         ArrayList<Movie> movieArrayList = new ArrayList<Movie>();
-        movieArrayList.add(new Movie("Avengers: Endgame", "Action, Adventure, Sci-Fi", "3 hours", R.drawable.avengers));
-        movieArrayList.add(new Movie("47 Meters Down", "Adventure, Drama, Horror", "2 hours 30 mins", R.drawable.meters));
-        movieArrayList.add(new Movie("Spiderman: Far From Home", "Action, Adventure, Sci-Fi", "2 hours 15 mins", R.drawable.spiderman));
-        movieArrayList.add(new Movie("Lion King", "Animation, Adventure, Drama", "1 hour 45 mins", R.drawable.lion_king));
-        movieArrayList.add(new Movie("Fast & Furious: Hobbs & Shaw", "Action, Adventure", "2 hours", R.drawable.hobbs));
+        movieArrayList.add(new Movie("Avengers: Endgame", "Action, Adventure, Sci-Fi", "3 hours", R.drawable.avengers, R.array.avengers));
+        movieArrayList.add(new Movie("47 Meters Down", "Adventure, Drama, Horror", "2 hours 30 mins", R.drawable.meters, R.array.meters));
+        movieArrayList.add(new Movie("Spiderman: Far From Home", "Action, Adventure, Sci-Fi", "2 hours 15 mins", R.drawable.spiderman, R.array.spiderman));
+        movieArrayList.add(new Movie("Lion King", "Animation, Adventure, Drama", "1 hour 45 mins", R.drawable.lion_king, R.array.lion));
+        movieArrayList.add(new Movie("Fast & Furious: Hobbs & Shaw", "Action, Adventure", "2 hours", R.drawable.hobbs, R.array.fastNfurious));
 
         return movieArrayList;
     }
@@ -100,5 +111,6 @@ public class Movie implements Parcelable {
         parcel.writeString(genre);
         parcel.writeString(duration);
         parcel.writeInt(image);
+        parcel.writeInt(showtimes);
     }
 }

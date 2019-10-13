@@ -14,15 +14,15 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Ada
     private  ArrayList<Movie> movieList;
     private  RecyclerView recyclerView;
     private  MoviesAdapter moviesAdapter;
-    private Movie selected_movie;
+    private  Movie selected_movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         movieList = Movie.createMovieList();
         setRecyclerView();
-
     }
 
     private void setRecyclerView(){
