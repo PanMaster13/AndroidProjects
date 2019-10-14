@@ -127,6 +127,8 @@ public class Movie implements Parcelable {
         this.kids_tickets = kids_tickets;
     }
 
+    public int getTotalTickets() { return adult_tickets + kids_tickets; }
+
     public static ArrayList<Movie> createMovieList(){ ;
         ArrayList<Movie> movieArrayList = new ArrayList<Movie>();
         movieArrayList.add(new Movie("Avengers: Endgame", "Action, Adventure, Sci-Fi", "3 hours", R.drawable.avengers, R.array.avengers));

@@ -94,6 +94,7 @@
         android:focusable="false"
         android:drawableRight="@drawable/calendar_icon"
         android:textSize="16sp"
+        android:text=""
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateTitle"
         android:layout_marginTop="10dp"

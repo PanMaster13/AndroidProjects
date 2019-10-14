@@ -13,8 +13,11 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
+
+import static android.service.autofill.Validators.or;
 
 public class MainActivity2 extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     private TextView movie_title, movie_genre, movie_duration, dateText, adultText, kidsText;
@@ -121,10 +124,15 @@ public class MainActivity2 extends AppCompatActivity implements DatePickerDialog
         book_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("returned", movie_selected);
-                setResult(1, returnIntent);
-                finish();
+                if ((movie_selected.getDate().matches("")) || (movie_selected.getTotalTickets() == 0)){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Please ensure that a date is selected and at least there is 1 ticket reservation.", Toast.LENGTH_LONG);
+                    toast.show();
+                }else{
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("returned", movie_selected);
+                    setResult(1, returnIntent);
+                    finish();
+                }
             }
         });
     }
