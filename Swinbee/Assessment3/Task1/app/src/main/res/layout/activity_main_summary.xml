@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <TextView
+        android:id="@+id/summary_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/summary_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:maxWidth="400dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/summary_title"
+        tools:srcCompat="@tools:sample/avatars"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:id="@+id/summary_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date: "
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toRightOf="@+id/summary_image"
+        app:layout_constraintTop_toBottomOf="@+id/summary_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:id="@+id/summary_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time: "
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toRightOf="@+id/summary_image"
+        app:layout_constraintTop_toBottomOf="@+id/summary_date"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <View
+        android:id="@+id/summary_hr"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintLeft_toRightOf="@+id/summary_image"
+        app:layout_constraintTop_toBottomOf="@+id/summary_time"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/summary_ticket_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tickets"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/summary_hr"
+        app:layout_constraintLeft_toRightOf="@+id/summary_image"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/summary_adult_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adults"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/summary_ticket_title"
+        app:layout_constraintLeft_toRightOf="@+id/summary_image"
+        app:layout_constraintRight_toLeftOf="@+id/summary_vr"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/summary_adult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/summary_adult_title"
+        app:layout_constraintLeft_toRightOf="@+id/summary_image"
+        app:layout_constraintRight_toLeftOf="@+id/summary_vr"
+        android:layout_marginTop="10dp"
+        />
+
+    <View
+        android:id="@+id/summary_vr"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@+id/hr_guide"
+        app:layout_constraintLeft_toRightOf="@+id/summary_image"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/summary_ticket_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
+        android:id="@+id/summary_kids_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kids"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/summary_ticket_title"
+        app:layout_constraintLeft_toRightOf="@+id/summary_vr"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/summary_kids"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/summary_kids_title"
+        app:layout_constraintLeft_toRightOf="@+id/summary_vr"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hr_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.33"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

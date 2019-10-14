@@ -9,8 +9,11 @@ public class Movie implements Parcelable {
     private String title;
     private String genre;
     private String duration;
+    private String date;
     private int showtimes;
-
+    private String selected_time;
+    private int adult_tickets;
+    private int kids_tickets;
     private int image;
 
     public Movie() {
@@ -21,7 +24,11 @@ public class Movie implements Parcelable {
         this.genre = genre;
         this.duration = duration;
         this.image = image;
+        this.date = "";
         this.showtimes = showtimes;
+        this.selected_time = "";
+        this.adult_tickets = 0;
+        this.kids_tickets = 0;
     }
 
     protected Movie(Parcel in) {
@@ -29,7 +36,11 @@ public class Movie implements Parcelable {
         genre = in.readString();
         duration = in.readString();
         image = in.readInt();
+        date = in.readString();
         showtimes = in.readInt();
+        selected_time = in.readString();
+        adult_tickets = in.readInt();
+        kids_tickets = in.readInt();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -76,12 +87,44 @@ public class Movie implements Parcelable {
         this.image = image;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public int getShowtimes() {
         return showtimes;
     }
 
     public void setShowtimes(int showtimes) {
         this.showtimes = showtimes;
+    }
+
+    public String getSelected_time() {
+        return selected_time;
+    }
+
+    public void setSelected_time(String selected_time) {
+        this.selected_time = selected_time;
+    }
+
+    public int getAdult_tickets() {
+        return adult_tickets;
+    }
+
+    public void setAdult_tickets(int adult_tickets) {
+        this.adult_tickets = adult_tickets;
+    }
+
+    public int getKids_tickets() {
+        return kids_tickets;
+    }
+
+    public void setKids_tickets(int kids_tickets) {
+        this.kids_tickets = kids_tickets;
     }
 
     public static ArrayList<Movie> createMovieList(){ ;
@@ -111,6 +154,10 @@ public class Movie implements Parcelable {
         parcel.writeString(genre);
         parcel.writeString(duration);
         parcel.writeInt(image);
+        parcel.writeString(date);
         parcel.writeInt(showtimes);
+        parcel.writeString(selected_time);
+        parcel.writeInt(adult_tickets);
+        parcel.writeInt(kids_tickets);
     }
 }
