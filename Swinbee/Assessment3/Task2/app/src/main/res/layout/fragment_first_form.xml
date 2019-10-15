@@ -204,7 +204,7 @@
         android:id="@+id/pickle_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="picle"
+        android:text="pickle"
         app:layout_constraintLeft_toRightOf="@+id/tomato_btn"
         app:layout_constraintTop_toBottomOf="@id/fiber_image"
         app:layout_constraintRight_toLeftOf="@id/onion_btn"

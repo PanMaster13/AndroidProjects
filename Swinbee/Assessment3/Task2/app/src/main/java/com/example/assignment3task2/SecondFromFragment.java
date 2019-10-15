@@ -1,10 +1,6 @@
 package com.example.assignment3task2;
-
-
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +10,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -22,9 +17,11 @@ public class SecondFromFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
     private double final_price, true_final_price;
     private double fat_price = 0.0, size_multiplier = 0.0;
-    private String first_order_details, second_order_details = " top up with", final_order_details;
+    private String first_order_details, second_order_details = " top up with nothing", final_order_details;
+    private int fat_box_counter = 0;
 
     private CheckBox cheese_btn, mayo_btn, mustard_btn, bbq_btn;
     private Spinner size_spinner;
@@ -33,9 +30,7 @@ public class SecondFromFragment extends Fragment {
 
     private HashMap<String, Double> ingredient_price_2 = new HashMap<>();
 
-    public SecondFromFragment() {
-        // Required empty public constructor
-    }
+    public SecondFromFragment() { } // Required empty public constructor
 
     public static SecondFromFragment newInstance(double final_price, String first_order_details) {
         SecondFromFragment fragment = new SecondFromFragment();
@@ -56,10 +51,8 @@ public class SecondFromFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_second_from, container, false);
-
         // Fat Section
         ingredient_price_2.put("Mustard", 0.70);
         ingredient_price_2.put("Cheese", 1.00);
@@ -70,25 +63,24 @@ public class SecondFromFragment extends Fragment {
         ingredient_price_2.put("Regular", 1.2);
         ingredient_price_2.put("Large", 1.3);
         ingredient_price_2.put("Gigantic", 1.5);
-
+        // TextView to display results of selection
         price_display = view.findViewById(R.id.order_price);
         order_details_display = view.findViewById(R.id.order_details);
-
+        // Fat checkboxes
         cheese_btn = view.findViewById(R.id.cheese_btn);
         mayo_btn = view.findViewById(R.id.mayo_btn);
         mustard_btn = view.findViewById(R.id.mustard_btn);
         bbq_btn = view.findViewById(R.id.bbq_btn);
-
+        // Fat checkbox onclick listeners
         createFatButtonListener(cheese_btn, ingredient_price_2.get("Cheese") , " ,cheese");
         createFatButtonListener(mayo_btn, ingredient_price_2.get("Mayo"), " ,mayonaise");
         createFatButtonListener(mustard_btn, ingredient_price_2.get("Mustard"), " ,mustard");
         createFatButtonListener(bbq_btn, ingredient_price_2.get("BBQ"), " ,barbeque");
-
+        // Size selection spinner
         size_spinner = view.findViewById(R.id.size_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.size_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         size_spinner.setAdapter(adapter);
-
         size_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -96,14 +88,13 @@ public class SecondFromFragment extends Fragment {
                 size_multiplier = ingredient_price_2.get(sizeValue);
                 setPrice();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 size_multiplier = 1.0;
                 setPrice();
             }
         });
-
+        // Button to go to previous fragment
         return_btn = view.findViewById(R.id.return_btn);
         return_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +102,6 @@ public class SecondFromFragment extends Fragment {
                 getFragmentManager().popBackStack();
             }
         });
-
         return view;
     }
 
@@ -130,11 +120,17 @@ public class SecondFromFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (btn.isChecked()) {
+                    second_order_details = removeWord(second_order_details, " nothing");
                     fat_price = fat_price + value;
                     second_order_details = second_order_details + detail;
+                    fat_box_counter++;
                 } else if (!btn.isChecked()) {
                     fat_price = fat_price - value;
                     second_order_details = removeWord(second_order_details, detail);
+                    fat_box_counter--;
+                    if (fat_box_counter == 0){
+                        second_order_details = second_order_details + " nothing";
+                    }
                 }
                 setPrice();
             }
