@@ -59,32 +59,16 @@ public class Movie implements Parcelable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getGenre() {
         return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public String getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
     public int getImage() {
         return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
     }
 
     public String getDate() {
@@ -97,10 +81,6 @@ public class Movie implements Parcelable {
 
     public int getShowtimes() {
         return showtimes;
-    }
-
-    public void setShowtimes(int showtimes) {
-        this.showtimes = showtimes;
     }
 
     public String getSelected_time() {

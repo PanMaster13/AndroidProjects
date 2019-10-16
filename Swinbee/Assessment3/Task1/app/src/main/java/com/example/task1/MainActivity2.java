@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import static android.service.autofill.Validators.or;
-
 public class MainActivity2 extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     private TextView movie_title, movie_genre, movie_duration, dateText, adultText, kidsText;
     private ImageView movie_image, arrow_up_1, arrow_down_1, arrow_up_2, arrow_down_2;
