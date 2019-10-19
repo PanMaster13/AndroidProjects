@@ -161,11 +161,8 @@ public class MainActivity extends AppCompatActivity {
         ingredientPrice.put("Chicken", 3.00);
         ingredientPrice.put("Fish", 4.00);
         ingredientPrice.put("Egg", 2.00);
-        // Fiber Section
-        ingredientPrice.put("Lettuce", FIBER_AMOUNT);
-        ingredientPrice.put("Tomato", FIBER_AMOUNT);
-        ingredientPrice.put("Pickle", FIBER_AMOUNT);
-        ingredientPrice.put("Onion", FIBER_AMOUNT);
+        // Fiber Section (All fiber price is the same)
+        ingredientPrice.put("Fiber", FIBER_AMOUNT);
         // Fat Section
         ingredientPrice.put("Mustard", 0.70);
         ingredientPrice.put("Cheese", 1.00);
@@ -193,10 +190,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // ---------------------Fiber Section--------------------------------
-        createFiberButtonListener(lettuce_btn, ingredientPrice.get("Lettuce"));
-        createFiberButtonListener(tomato_btn, ingredientPrice.get("Tomato"));
-        createFiberButtonListener(pickle_btn, ingredientPrice.get("Pickle"));
-        createFiberButtonListener(onion_btn, ingredientPrice.get("Onion"));
+        createFiberButtonListener(lettuce_btn, ingredientPrice.get("Fiber"));
+        createFiberButtonListener(tomato_btn, ingredientPrice.get("Fiber"));
+        createFiberButtonListener(pickle_btn, ingredientPrice.get("Fiber"));
+        createFiberButtonListener(onion_btn, ingredientPrice.get("Fiber"));
         // ---------------------------Fat Section-------------------------------
         createFatButtonListener(mustard_btn, ingredientPrice.get("Mustard"));
         createFatButtonListener(cheese_btn, ingredientPrice.get("Cheese"));
