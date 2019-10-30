@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdapter.NewsViewHolder> {
-    private List<NewsObject> newsList;
+    public List<NewsObject> newsList;
     private Context context;
 
     public class NewsViewHolder extends RecyclerView.ViewHolder {
@@ -51,6 +51,7 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, newsObject.getUrl(), Toast.LENGTH_SHORT).show();
+
             }
         });
     }
