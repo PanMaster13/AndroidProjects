@@ -7,11 +7,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,10 +20,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ai_fragment extends Fragment {
+public class ai_fragment extends Fragment{
 
     TextView textView;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
+    private MyRecycleViewAdapter.AdapterCallBack adapterCallBack;
 
     public ai_fragment() {
         // Required empty public constructor
@@ -42,9 +43,14 @@ public class ai_fragment extends Fragment {
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
-        List<NewsObject> list = getListItemData();
-
-        MyRecycleViewAdapter rcAdapter = new MyRecycleViewAdapter(list, getActivity().getApplicationContext());
+        final List<NewsObject> list = getListItemData();
+        MyRecycleViewAdapter.AdapterCallBack listener = new MyRecycleViewAdapter.AdapterCallBack() {
+            @Override
+            public void onMethodCallBack(int position) {
+                Toast.makeText(getContext(), list.get(position).getUrl(), Toast.LENGTH_SHORT).show();
+            }
+        };
+        MyRecycleViewAdapter rcAdapter = new MyRecycleViewAdapter(list, listener);
         recyclerView.setAdapter(rcAdapter);
 
        return view;
@@ -100,4 +106,5 @@ public class ai_fragment extends Fragment {
         }
         return string;
     }
+
 }

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdapter.NewsViewHolder> {
+
     public List<NewsObject> newsList;
-    private Context context;
+    private AdapterCallBack adapterCallBack;
 
     public class NewsViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
@@ -28,9 +28,9 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
         }
     }
 
-    public MyRecycleViewAdapter(List<NewsObject> newsList, Context context) {
+    public MyRecycleViewAdapter(List<NewsObject> newsList, AdapterCallBack adapterCallBack) {
         this.newsList = newsList;
-        this.context = context;
+        this.adapterCallBack = adapterCallBack;
     }
 
     @NonNull
@@ -43,15 +43,14 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyRecycleViewAdapter.NewsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyRecycleViewAdapter.NewsViewHolder holder, final int position) {
         final NewsObject newsObject = newsList.get(position);
         holder.imageView.setImageResource(newsList.get(position).getImage());
         holder.titleText.setText(newsList.get(position).getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, newsObject.getUrl(), Toast.LENGTH_SHORT).show();
-
+                adapterCallBack.onMethodCallBack(position);
             }
         });
     }

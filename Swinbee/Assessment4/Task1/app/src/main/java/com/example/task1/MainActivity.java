@@ -5,7 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity implements MyRecycleViewAdapter.AdapterCallBack{
+public class MainActivity extends AppCompatActivity{
 
     NewsObject selected_news;
 
@@ -18,10 +18,5 @@ public class MainActivity extends AppCompatActivity implements MyRecycleViewAdap
         MainPagerAdapter mainPagerAdapter = new MainPagerAdapter
                 (getSupportFragmentManager());
         viewPager.setAdapter(mainPagerAdapter);
-    }
-
-    @Override
-    public void onMethodCallBack(int position) {
-
     }
 }
