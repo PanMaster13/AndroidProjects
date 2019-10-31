@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +21,6 @@ import java.util.List;
 
 public class ai_fragment extends Fragment{
 
-    TextView textView;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
     private AIFragmentInteractionListener mListener;
 
@@ -34,8 +32,6 @@ public class ai_fragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tabview_fragment, container, false);
-
-        textView = view.findViewById(R.id.text1);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycleView);
         recyclerView.setHasFixedSize(true);
@@ -76,7 +72,7 @@ public class ai_fragment extends Fragment{
                         String imageName = removeWord(removeColonFromText(newsItemList.get(1)), ".png");
                         String title = removeColonFromText(newsItemList.get(2));
                         String urlLine[] = newsItemList.get(3).split(":");
-                        String url = urlLine[1] + urlLine[2];
+                        String url = urlLine[1] + ":" + urlLine[2];
 
                         Resources resources = getResources();
                         int imageResourceId = resources.getIdentifier(imageName, "drawable", getActivity().getPackageName());

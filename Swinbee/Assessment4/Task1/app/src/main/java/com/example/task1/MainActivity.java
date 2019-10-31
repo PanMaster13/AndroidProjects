@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements cyber_fragment.CyberFragmentInteractionListener, ai_fragment.AIFragmentInteractionListener{
 
@@ -21,11 +20,19 @@ public class MainActivity extends AppCompatActivity implements cyber_fragment.Cy
 
     @Override
     public void CyberFragmentInteraction(String url) {
-        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+        web_view_fragment webViewFragment = web_view_fragment.newInstance(url);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainLayout, webViewFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     public void AIFragmentInteraction(String url) {
-        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+        web_view_fragment webViewFragment = web_view_fragment.newInstance(url);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainLayout, webViewFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
