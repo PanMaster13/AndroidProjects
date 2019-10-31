@@ -1,5 +1,6 @@
 package com.example.task1;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class ai_fragment extends Fragment{
 
     TextView textView;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
-    private MyRecycleViewAdapter.AdapterCallBack adapterCallBack;
+    private AIFragmentInteractionListener mListener;
 
     public ai_fragment() {
         // Required empty public constructor
@@ -47,7 +47,7 @@ public class ai_fragment extends Fragment{
         MyRecycleViewAdapter.AdapterCallBack listener = new MyRecycleViewAdapter.AdapterCallBack() {
             @Override
             public void onMethodCallBack(int position) {
-                Toast.makeText(getContext(), list.get(position).getUrl(), Toast.LENGTH_SHORT).show();
+                onButtonPressed(list.get(position).getUrl());
             }
         };
         MyRecycleViewAdapter rcAdapter = new MyRecycleViewAdapter(list, listener);
@@ -105,6 +105,33 @@ public class ai_fragment extends Fragment{
             string = string.replaceAll(text, "");
         }
         return string;
+    }
+
+    public void onButtonPressed(String url){
+        if (mListener != null){
+            mListener.AIFragmentInteraction(url);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof AIFragmentInteractionListener){
+            mListener = (AIFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement AIFragmentInteractionListener!");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface AIFragmentInteractionListener {
+        void AIFragmentInteraction(String url);
     }
 
 }

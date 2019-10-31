@@ -1,5 +1,6 @@
 package com.example.task1;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +24,8 @@ public class cyber_fragment extends Fragment{
     TextView textView;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
 
-    private static String PARAM_KEY = "MSG1";
+    private static String PARAM_KEY = "URL_PATH";
+    private CyberFragmentInteractionListener mListener;
 
     public cyber_fragment() {
         // Required empty public constructor
@@ -53,7 +54,7 @@ public class cyber_fragment extends Fragment{
         MyRecycleViewAdapter.AdapterCallBack listener = new MyRecycleViewAdapter.AdapterCallBack() {
             @Override
             public void onMethodCallBack(int position) {
-                Toast.makeText(getContext(), list.get(position).getUrl(), Toast.LENGTH_SHORT).show();
+                onButtonPressed(list.get(position).getUrl());
             }
         };
 
@@ -114,4 +115,30 @@ public class cyber_fragment extends Fragment{
         return string;
     }
 
+    public void onButtonPressed(String url){
+        if (mListener != null){
+            mListener.CyberFragmentInteraction(url);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof CyberFragmentInteractionListener){
+            mListener = (CyberFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement CyberFragmentInteractionListener!");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface CyberFragmentInteractionListener {
+        void CyberFragmentInteraction(String url);
+    }
 }
