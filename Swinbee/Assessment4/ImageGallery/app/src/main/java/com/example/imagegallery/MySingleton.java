@@ -14,17 +14,17 @@ public class MySingleton {
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
 
-    private MySingleton(Context context){
+    private MySingleton(Context context) {
         this.context = context;
         requestQueue = Volley.newRequestQueue(context);
         imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
 
-            private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(6);
+            private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(3);
 
             @Override
             public Bitmap getBitmap(String url) {
                 Bitmap bmp = cache.get(url);
-                if (bmp == null){
+                if (bmp == null) {
                     System.out.println("Image not in cache");
                 } else {
                     System.out.println("Image in cache");
@@ -40,14 +40,14 @@ public class MySingleton {
         });
     }
 
-    public static synchronized MySingleton getInstance(Context context){
-        if (mySingleton == null){
+    public static synchronized MySingleton getInstance(Context context) {
+        if (mySingleton == null) {
             mySingleton = new MySingleton(context);
         }
         return mySingleton;
     }
 
-    public ImageLoader getImageLoader(){
+    public ImageLoader getImageLoader() {
         return imageLoader;
     }
 }

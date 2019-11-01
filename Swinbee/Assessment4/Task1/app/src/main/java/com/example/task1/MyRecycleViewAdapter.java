@@ -35,15 +35,13 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.news_list_item, null);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_list_item, null);
         NewsViewHolder rcv = new NewsViewHolder(layoutView);
         return rcv;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyRecycleViewAdapter.NewsViewHolder holder, final int position) {
-        final NewsObject newsObject = newsList.get(position);
         holder.imageView.setImageResource(newsList.get(position).getImage());
         holder.titleText.setText(newsList.get(position).getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
