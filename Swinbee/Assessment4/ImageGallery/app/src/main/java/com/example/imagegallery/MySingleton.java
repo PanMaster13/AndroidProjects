@@ -2,7 +2,7 @@ package com.example.imagegallery;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.Image;
+import android.util.LruCache;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -18,15 +18,36 @@ public class MySingleton {
         this.context = context;
         requestQueue = Volley.newRequestQueue(context);
         imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
+
+            private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(6);
+
             @Override
             public Bitmap getBitmap(String url) {
-                return null;
+                Bitmap bmp = cache.get(url);
+                if (bmp == null){
+                    System.out.println("Image not in cache");
+                } else {
+                    System.out.println("Image in cache");
+                }
+                return bmp;
             }
 
             @Override
             public void putBitmap(String url, Bitmap bitmap) {
-
+                System.out.println("Put image in cache");
+                cache.put(url, bitmap);
             }
         });
+    }
+
+    public static synchronized MySingleton getInstance(Context context){
+        if (mySingleton == null){
+            mySingleton = new MySingleton(context);
+        }
+        return mySingleton;
+    }
+
+    public ImageLoader getImageLoader(){
+        return imageLoader;
     }
 }
