@@ -1,6 +1,5 @@
 package com.example.task1;
 
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
