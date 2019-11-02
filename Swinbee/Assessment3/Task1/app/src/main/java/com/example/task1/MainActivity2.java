@@ -23,7 +23,7 @@ public class MainActivity2 extends AppCompatActivity implements DatePickerDialog
     private Movie movie_selected;
     private Spinner time_spinner;
     private Button book_btn;
-    public static final String[] MONTHS = {"January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"};
+    public static final String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
 
     @Override
@@ -145,6 +145,8 @@ public class MainActivity2 extends AppCompatActivity implements DatePickerDialog
                 calendar.getInstance().get(Calendar.MONTH),
                 calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         );
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() + (1000*60*60*24*3));
         datePickerDialog.show();
     }
 
@@ -165,5 +167,10 @@ public class MainActivity2 extends AppCompatActivity implements DatePickerDialog
         else{
             return personValue;
         }
+    }
+
+    public Boolean checkDateBooked(){
+
+        return true;
     }
 }
