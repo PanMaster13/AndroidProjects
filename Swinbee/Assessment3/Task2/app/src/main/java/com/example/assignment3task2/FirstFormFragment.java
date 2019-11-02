@@ -14,17 +14,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FirstFormFragment extends Fragment {
 
     private static double FIBER_AMOUNT = 0.5;
-    private double final_price = 0.0;
-    private String first_order_details = "with nothing";
-    private double protein_price = 0.0, fiber_price = 0.0;
+    private String first_order_details = "with no fiber";
+    private ArrayList<String> fiber_items = new ArrayList<>();
+    private String protein_item;
     private boolean protein_is_selected = false;
     private int fiber_box_counter = 0;
     private boolean fiber_is_three = false;
+    private boolean first_word_is_there = false;
 
     private HashMap<String, Double> ingredient_price = new HashMap<>();
 
@@ -40,9 +42,6 @@ public class FirstFormFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            final_price = getArguments().getDouble(PARAM_KEY);
-        }
     }
 
     @Override
@@ -68,27 +67,29 @@ public class FirstFormFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 RadioButton btn = view.findViewById(i);
-                protein_price = ingredient_price.get(btn.getText());
+                protein_item = String.valueOf(btn.getText());
                 first_order_details = removeWord(first_order_details, "beef ");
                 first_order_details = removeWord(first_order_details, "chicken ");
                 first_order_details = removeWord(first_order_details, "fish ");
                 first_order_details = removeWord(first_order_details, "egg ");
                 first_order_details = btn.getText() + " " + first_order_details;
-                setPrice();
                 protein_is_selected = true;
             }
         });
         // Fiber checkboxes button listeners
-        createFiberButtonListener(lettuce_btn, ingredient_price.get("fiber"), " ,lettuce");
-        createFiberButtonListener(tomato_btn, ingredient_price.get("fiber"), " ,tomato");
-        createFiberButtonListener(pickle_btn, ingredient_price.get("fiber"), " ,pickle");
-        createFiberButtonListener(onion_btn, ingredient_price.get("fiber"), " ,onion");
+        createFiberButtonListener(lettuce_btn, "lettuce");
+        createFiberButtonListener(tomato_btn, "tomato");
+        createFiberButtonListener(pickle_btn, "pickle");
+        createFiberButtonListener(onion_btn, "onion");
         // Button listener
         next_fragment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (protein_is_selected){
-                    onButtonPressed(final_price, first_order_details);
+                    ArrayList<String> selected_items = new ArrayList<>();
+                    selected_items.add(protein_item);
+                    selected_items.addAll(fiber_items);
+                    onButtonPressed(selected_items, first_order_details, fiber_is_three);
                 } else if (!protein_is_selected){
                     Toast.makeText(getContext(), "A selection from the protein section must be selected!", Toast.LENGTH_SHORT).show();
                 }
@@ -103,9 +104,9 @@ public class FirstFormFragment extends Fragment {
         checkFiberBoxes(); // Ensures that the appropriate checkboxes are enabled/disabled when user goes back to this page
     }
 
-    public void onButtonPressed(double final_price, String first_order_details) {
+    public void onButtonPressed(ArrayList<String> arrayList, String first_order_details, boolean fiber_is_three) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(final_price, first_order_details);
+            mListener.onFragmentInteraction(arrayList, first_order_details, fiber_is_three);
         }
     }
 
@@ -127,32 +128,7 @@ public class FirstFormFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-
-        void onFragmentInteraction(double final_price, String first_order_details);
-    }
-
-    // Sets fiber price based on discount and disables appropriate checkbox
-    public void checkFiberLimit() {
-        if (fiber_box_counter == 3) {
-            fiber_price = fiber_price - 0.5;
-            if (!lettuce_btn.isChecked()) {
-                lettuce_btn.setEnabled(false);
-            } else if(!tomato_btn.isChecked()) {
-                tomato_btn.setEnabled(false);
-            } else if(!pickle_btn.isChecked()) {
-                pickle_btn.setEnabled(false);
-            } else if(!onion_btn.isChecked()) {
-                onion_btn.setEnabled(false);
-            }
-            fiber_is_three = true;
-        } else if (fiber_is_three) {
-            fiber_price = fiber_price + 0.5;
-            lettuce_btn.setEnabled(true);
-            tomato_btn.setEnabled(true);
-            pickle_btn.setEnabled(true);
-            onion_btn.setEnabled(true);
-            fiber_is_three = false;
-        }
+        void onFragmentInteraction(ArrayList<String> arrayList, String first_order_details, boolean fiber_is_three);
     }
 
     // Ensures that the appropriate checkboxes are enabled/disabled when user goes back to this page
@@ -177,32 +153,36 @@ public class FirstFormFragment extends Fragment {
         }
     }
 
-    // Changes price on screen
-    public void setPrice() {
-        final_price = protein_price + fiber_price;
-    }
-
     // Function to create fiber checkbox button listener
-    public void createFiberButtonListener(final CheckBox btn, final double value, final String detail){
+    public void createFiberButtonListener(final CheckBox btn, final String detail){
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(btn.isChecked()){
-                    fiber_price = fiber_price + value;
-                    first_order_details = removeWord(first_order_details, " nothing");
-                    first_order_details = first_order_details + detail;
+                    fiber_items.add(String.valueOf(btn.getText()));
+                    first_order_details = removeWord(first_order_details, " no fiber");
+                    if (!first_word_is_there){
+                        first_order_details = first_order_details + " " + detail;
+                        first_word_is_there = true;
+                    } else {
+                        first_order_details = first_order_details + ", " + detail;
+                    }
                     fiber_box_counter++;
-                    checkFiberLimit();
+                   checkFiberBoxes();
                 } else if (!btn.isChecked()){
-                    fiber_price = fiber_price - value;
-                    first_order_details = removeWord(first_order_details, detail);
+                    fiber_items.remove(String.valueOf(btn.getText()));
+                    if (fiber_box_counter == 1){
+                        first_order_details = removeWord(first_order_details, " " + detail);
+                        first_word_is_there = false;
+                    } else {
+                        first_order_details = removeWord(first_order_details, ", " + detail);
+                    }
                     fiber_box_counter--;
                     if (fiber_box_counter == 0){
-                        first_order_details = first_order_details + " nothing";
+                        first_order_details = first_order_details + " no fiber";
                     }
-                    checkFiberLimit();
+                    checkFiberBoxes();
                 }
-                setPrice();
             }
         });
     }

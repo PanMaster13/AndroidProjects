@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements FirstFormFragment.OnFragmentInteractionListener {
 
     private ConstraintLayout main_layout;
@@ -25,8 +27,8 @@ public class MainActivity extends AppCompatActivity implements FirstFormFragment
     }
 
     @Override
-    public void onFragmentInteraction(double final_price, String first_order_details) {
-        SecondFromFragment secondFromFragment = SecondFromFragment.newInstance(final_price, first_order_details);
+    public void onFragmentInteraction(ArrayList<String> arrayList, String first_order_details, boolean fiber_is_three) {
+        SecondFromFragment secondFromFragment = SecondFromFragment.newInstance(arrayList, first_order_details, fiber_is_three);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_layout, secondFromFragment)
