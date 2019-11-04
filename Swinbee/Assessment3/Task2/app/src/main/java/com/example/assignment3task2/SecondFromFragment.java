@@ -136,6 +136,9 @@ public class SecondFromFragment extends Fragment {
         for (int i = 0; i < selected_items.size(); i++){
             init_price = init_price + ingredient_price.get(selected_items.get(i));
         }
+        if (fiber_is_three) {
+            init_price = init_price - FIBER_AMOUNT;
+        }
     }
 
     // Creates button listener for fat section
