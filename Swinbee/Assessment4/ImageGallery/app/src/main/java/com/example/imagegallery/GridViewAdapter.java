@@ -16,12 +16,13 @@ import com.android.volley.toolbox.ImageLoader;
 public class GridViewAdapter extends BaseAdapter {
     private Context context;
     private final int THUMBNAIL_SIZE = 250;
-    public static final String URL[] = {"http://192.168.56.1/OTHERS/task2Images/image1.png",
-            "http://192.168.56.1/OTHERS/task2Images/image2.png",
-            "http://192.168.56.1/OTHERS/task2Images/image3.png",
-            "http://192.168.56.1/OTHERS/task2Images/image4.png",
-            "http://192.168.56.1/OTHERS/task2Images/image5.png",
-            "http://192.168.56.1/OTHERS/task2Images/image6.png"};
+    // Localhost IP changes depending on device used
+    public static final String URL[] = {"http://172.17.3.191/OTHERS/task2Images/image1.png",
+            "http://172.17.3.191/OTHERS/task2Images/image2.png",
+            "http://172.17.3.191/OTHERS/task2Images/image3.png",
+            "http://172.17.3.191/OTHERS/task2Images/image4.png",
+            "http://172.17.3.191/OTHERS/task2Images/image5.png",
+            "http://172.17.3.191/OTHERS/task2Images/image6.png"};
 
     public GridViewAdapter(Context context){
         this.context = context;
