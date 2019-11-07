@@ -1,4 +1,4 @@
-package com.example.task1;
+package com.example.technews;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

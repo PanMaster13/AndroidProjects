@@ -1,4 +1,4 @@
-package com.example.task1;
+package com.example.technews;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;

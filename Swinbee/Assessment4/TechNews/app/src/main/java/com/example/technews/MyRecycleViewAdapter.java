@@ -1,4 +1,4 @@
-package com.example.task1;
+package com.example.technews;
 
 import android.view.LayoutInflater;
 import android.view.View;

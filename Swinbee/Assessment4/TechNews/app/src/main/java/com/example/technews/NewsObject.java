@@ -1,4 +1,4 @@
-package com.example.task1;
+package com.example.technews;
 
 import android.os.Parcel;
 import android.os.Parcelable;

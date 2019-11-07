@@ -1,4 +1,4 @@
-package com.example.task1;
+package com.example.technews;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -19,13 +19,19 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ai_fragment extends Fragment{
-
+public class cyber_fragment extends Fragment{
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
-    private AIFragmentInteractionListener mListener;
 
-    public ai_fragment() {
+    private static String PARAM_KEY = "URL_PATH";
+    private CyberFragmentInteractionListener mListener;
+
+    public cyber_fragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -40,16 +46,18 @@ public class ai_fragment extends Fragment{
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
         final List<NewsObject> list = getListItemData();
+
         MyRecycleViewAdapter.AdapterCallBack listener = new MyRecycleViewAdapter.AdapterCallBack() {
             @Override
             public void onMethodCallBack(int position) {
                 onButtonPressed(list.get(position).getUrl());
             }
         };
+
         MyRecycleViewAdapter rcAdapter = new MyRecycleViewAdapter(list, listener);
         recyclerView.setAdapter(rcAdapter);
 
-       return view;
+        return view;
     }
 
     private List<NewsObject> getListItemData(){
@@ -68,7 +76,7 @@ public class ai_fragment extends Fragment{
                 counter++;
                 if (counter > 5){
                     String category = removeColonFromText(newsItemList.get(0));
-                    if (category.contains("AI")){
+                    if (category.contains("cybersecurity")){
                         String imageName = removeWord(removeColonFromText(newsItemList.get(1)), ".png");
                         String title = removeColonFromText(newsItemList.get(2));
                         String urlLine[] = newsItemList.get(3).split(":");
@@ -105,18 +113,18 @@ public class ai_fragment extends Fragment{
 
     public void onButtonPressed(String url){
         if (mListener != null){
-            mListener.AIFragmentInteraction(url);
+            mListener.CyberFragmentInteraction(url);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof AIFragmentInteractionListener){
-            mListener = (AIFragmentInteractionListener) context;
+        if (context instanceof CyberFragmentInteractionListener){
+            mListener = (CyberFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement AIFragmentInteractionListener!");
+                    + " must implement CyberFragmentInteractionListener!");
         }
     }
 
@@ -126,8 +134,7 @@ public class ai_fragment extends Fragment{
         mListener = null;
     }
 
-    public interface AIFragmentInteractionListener {
-        void AIFragmentInteraction(String url);
+    public interface CyberFragmentInteractionListener {
+        void CyberFragmentInteraction(String url);
     }
-
 }
