@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".EditTaskActivity">
+
+    <TextView
+        android:id="@+id/title_text_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="What is to be done?"
+        android:textColor="@android:color/holo_blue_light"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/title_editBox_edit"/>
+
+    <EditText
+        android:id="@+id/title_editBox_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:inputType="text"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/title_text_edit"
+        tools:ignore="Autofill,LabelFor"
+        />
+
+    <TextView
+        android:id="@+id/dueDate_text_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="When is it due?"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_editBox_edit"
+        app:layout_constraintBottom_toTopOf="@+id/dueDate_box_edit"
+        />
+
+    <TextView
+        android:id="@+id/dueDate_box_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:drawableEnd="@drawable/blue_calendar_icon"
+        app:layout_constraintTop_toBottomOf="@+id/dueDate_text_edit"
+        app:layout_constraintBottom_toTopOf="@+id/details_title_edit"
+        />
+
+    <TextView
+        android:id="@+id/details_title_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Details"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dueDate_box_edit"
+        app:layout_constraintBottom_toTopOf="@+id/details_editBox_edit"
+        />
+
+    <EditText
+        android:id="@+id/details_editBox_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:inputType="textMultiLine"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/details_title_edit"
+        app:layout_constraintBottom_toBottomOf="@+id/priority_box_edit"
+        tools:ignore="Autofill,LabelFor"
+        />
+
+    <CheckBox
+        android:id="@+id/priority_box_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Important"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_blue_light"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/details_editBox_edit"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
