@@ -69,7 +69,7 @@ public class CompletedTasks extends AppCompatActivity {
         sortDate(completedTaskList);
         RecyclerView completedView = findViewById(R.id.completed_recycle_view);
         completedView.setLayoutManager(new LinearLayoutManager(this));
-        TaskObjectAdapter adapter = new TaskObjectAdapter(this, completedTaskList);
+        Completed_TaskObjectAdapter adapter = new Completed_TaskObjectAdapter(this, completedTaskList);
         completedView.setAdapter(adapter);
     }
 

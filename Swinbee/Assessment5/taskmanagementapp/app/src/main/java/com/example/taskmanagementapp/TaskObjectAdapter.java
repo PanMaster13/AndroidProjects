@@ -98,57 +98,52 @@ public class TaskObjectAdapter extends RecyclerView.Adapter<TaskObjectAdapter.Vi
             holder.cardView.setBackgroundColor(Color.parseColor("#FCFFA3"));
         }
 
-        if (object.getCompletion_status().equals("Completed")){
-            holder.status_switch.setChecked(true);
-            holder.status_switch.setEnabled(false);
-        } else {
-            // Sends object to edit page
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, EditTaskActivity.class);
-                    intent.putExtra("OBJECT", object);
-                    context.startActivity(intent);
-                }
-            });
+        // Sends object to edit page
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EditTaskActivity.class);
+                intent.putExtra("OBJECT", object);
+                context.startActivity(intent);
+            }
+        });
 
-            // Deletes object
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    final DbHandler handler = new DbHandler(context);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Alert").setMessage("Confirm Deletion of this Task?").setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            handler.deleteTaskObject(objectList.get(holder.getAdapterPosition()));
-                            objectList.remove(holder.getAdapterPosition());
-                            notifyDataSetChanged();
-                            ((OnUpdateDB)holder.itemView.getContext()).updateDB();
-                        }
-                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    return true;
-                }
-            });
-
-            holder.status_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    DbHandler handler = new DbHandler(context);
-                    if (b) {
-                        handler.updateTaskObject(new TaskObject(object.getId(), object.getTitle(), object.getDue_date(), object.getDetails(), object.getPriority(), "Completed"));
+        // Deletes object
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                final DbHandler handler = new DbHandler(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Alert").setMessage("Confirm Deletion of this Task?").setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        handler.deleteTaskObject(objectList.get(holder.getAdapterPosition()));
+                        objectList.remove(holder.getAdapterPosition());
+                        notifyDataSetChanged();
+                        ((OnUpdateDB)holder.itemView.getContext()).updateDB();
                     }
-                    ((OnUpdateDB)holder.itemView.getContext()).updateDB();
+                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+            }
+        });
+
+        holder.status_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                DbHandler handler = new DbHandler(context);
+                if (b) {
+                    handler.updateTaskObject(new TaskObject(object.getId(), object.getTitle(), object.getDue_date(), object.getDetails(), object.getPriority(), "Completed"));
                 }
-            });
-        }
+                ((OnUpdateDB)holder.itemView.getContext()).updateDB();
+            }
+        });
     }
 
     @Override
