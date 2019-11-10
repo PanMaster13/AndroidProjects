@@ -60,8 +60,8 @@ public class TaskObjectAdapter extends RecyclerView.Adapter<TaskObjectAdapter.Vi
             long date_difference = calendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
             long days_difference = date_difference / (24 * 60 * 60 * 1000);
             long hours_difference = date_difference / (60 * 60 * 1000);
-            if (hours_difference >= 24){
-                while (hours_difference >= 24){
+            if (hours_difference > 24){
+                while (hours_difference > 24){
                     hours_difference = hours_difference - 24;
                 }
             }

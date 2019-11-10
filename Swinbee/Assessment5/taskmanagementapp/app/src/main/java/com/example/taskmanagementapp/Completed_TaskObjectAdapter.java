@@ -12,9 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Completed_TaskObjectAdapter extends RecyclerView.Adapter<Completed_TaskObjectAdapter.ViewHolder> {
     private static ArrayList<TaskObject> completed_list;

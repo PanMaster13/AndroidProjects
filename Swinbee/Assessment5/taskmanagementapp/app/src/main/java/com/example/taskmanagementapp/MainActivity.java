@@ -2,10 +2,14 @@ package com.example.taskmanagementapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -130,4 +134,26 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
             }
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiveFromService, new IntentFilter(NOTIFICATION_SERVICE));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiveFromService);
+    }
+
+    private BroadcastReceiver receiveFromService = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null){
+                Intent stop_intent = new Intent(MainActivity.this, MyReceiver.class);
+                stopService(stop_intent);
+            }
+        }
+    };
 }
