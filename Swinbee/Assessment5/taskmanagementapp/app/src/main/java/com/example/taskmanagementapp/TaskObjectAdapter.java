@@ -59,24 +59,35 @@ public class TaskObjectAdapter extends RecyclerView.Adapter<TaskObjectAdapter.Vi
             holder.date_month.setText(object_date_list[1]);
             long date_difference = calendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
             long days_difference = date_difference / (24 * 60 * 60 * 1000);
+            long hours_difference = date_difference / (60 * 60 * 1000);
+            if (hours_difference >= 24){
+                while (hours_difference >= 24){
+                    hours_difference = hours_difference - 24;
+                }
+            }
+            String remaining_time_text;
             if (days_difference < 0){
                 holder.title_icon.setImageResource(R.drawable.clipboard_red1);
+                remaining_time_text = "0 hr";
+                holder.remaining_time.setText(remaining_time_text);
                 holder.date_day.setTextColor(Color.parseColor("#F64242"));
                 holder.date_month.setTextColor(Color.parseColor("#F64242"));
                 holder.title_display.setTextColor(Color.parseColor("#F64242"));
             } else if (days_difference <= 1){
                 holder.title_icon.setImageResource(R.drawable.clipboard_orange1);
+                remaining_time_text = days_difference + " days " + hours_difference + " hours";
+                holder.remaining_time.setText(remaining_time_text);
                 holder.date_day.setTextColor(Color.parseColor("#000000"));
                 holder.date_month.setTextColor(Color.parseColor("#000000"));
                 holder.title_display.setTextColor(Color.parseColor("#000000"));
             } else {
                 holder.title_icon.setImageResource(R.drawable.clipboard_blue1);
+                remaining_time_text = days_difference + " days " + hours_difference + " hours";
+                holder.remaining_time.setText(remaining_time_text);
                 holder.date_day.setTextColor(Color.parseColor("#000000"));
                 holder.date_month.setTextColor(Color.parseColor("#000000"));
                 holder.title_display.setTextColor(Color.parseColor("#000000"));
             }
-            // Need change to display remaining days and hours
-            holder.remaining_time.setText(object.getDue_date());
         } catch (ParseException e){
             e.printStackTrace();
         }
@@ -87,52 +98,57 @@ public class TaskObjectAdapter extends RecyclerView.Adapter<TaskObjectAdapter.Vi
             holder.cardView.setBackgroundColor(Color.parseColor("#FCFFA3"));
         }
 
-        // Sends object to edit page
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, EditTaskActivity.class);
-                intent.putExtra("OBJECT", object);
-                context.startActivity(intent);
-            }
-        });
-
-        // Deletes object
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                final DbHandler handler = new DbHandler(context);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Alert").setMessage("Delete this").setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        handler.deleteTaskObject(objectList.get(holder.getAdapterPosition()));
-                        objectList.remove(holder.getAdapterPosition());
-                        notifyDataSetChanged();
-                        ((OnUpdateDB)holder.itemView.getContext()).updateDB();
-                    }
-                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                return true;
-            }
-        });
-
-        holder.status_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                DbHandler handler = new DbHandler(context);
-                if (b) {
-                    handler.updateTaskObject(new TaskObject(object.getId(), object.getTitle(), object.getDue_date(), object.getDetails(), object.getPriority(), "Completed"));
+        if (object.getCompletion_status().equals("Completed")){
+            holder.status_switch.setChecked(true);
+            holder.status_switch.setEnabled(false);
+        } else {
+            // Sends object to edit page
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, EditTaskActivity.class);
+                    intent.putExtra("OBJECT", object);
+                    context.startActivity(intent);
                 }
-                ((OnUpdateDB)holder.itemView.getContext()).updateDB();
-            }
-        });
+            });
+
+            // Deletes object
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    final DbHandler handler = new DbHandler(context);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Alert").setMessage("Confirm Deletion of this Task?").setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            handler.deleteTaskObject(objectList.get(holder.getAdapterPosition()));
+                            objectList.remove(holder.getAdapterPosition());
+                            notifyDataSetChanged();
+                            ((OnUpdateDB)holder.itemView.getContext()).updateDB();
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    return true;
+                }
+            });
+
+            holder.status_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    DbHandler handler = new DbHandler(context);
+                    if (b) {
+                        handler.updateTaskObject(new TaskObject(object.getId(), object.getTitle(), object.getDue_date(), object.getDetails(), object.getPriority(), "Completed"));
+                    }
+                    ((OnUpdateDB)holder.itemView.getContext()).updateDB();
+                }
+            });
+        }
     }
 
     @Override

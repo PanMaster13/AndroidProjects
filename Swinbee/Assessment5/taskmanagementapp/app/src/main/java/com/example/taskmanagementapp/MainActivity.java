@@ -55,13 +55,15 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.nav_completed:
-                        Toast.makeText(MainActivity.this, "Completed", Toast.LENGTH_SHORT).show();
+                        Intent intent_completed = new Intent(MainActivity.this, CompletedTasks.class);
+                        startActivity(intent_completed);
                         break;
                     case R.id.nav_home:
-                        Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "You are already at this page.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_overdue:
-                        Toast.makeText(MainActivity.this, "Overdue", Toast.LENGTH_SHORT).show();
+                        Intent intent_overdue = new Intent(MainActivity.this, OverdueTasks.class);
+                        startActivity(intent_overdue);
                         break;
                 }
                 return true;
