@@ -66,7 +66,7 @@ public class TaskObjectAdapter extends RecyclerView.Adapter<TaskObjectAdapter.Vi
                 }
             }
             String remaining_time_text;
-            if (days_difference < 0){
+            if (days_difference < 0 || hours_difference < 0){
                 holder.title_icon.setImageResource(R.drawable.clipboard_red1);
                 remaining_time_text = "0 hr";
                 holder.remaining_time.setText(remaining_time_text);
