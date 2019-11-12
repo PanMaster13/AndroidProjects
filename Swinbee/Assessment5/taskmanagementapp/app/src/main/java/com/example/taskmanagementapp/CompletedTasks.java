@@ -29,6 +29,7 @@ public class CompletedTasks extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Completed Task");
         setContentView(R.layout.activity_completed_tasks);
 
         handler = new DbHandler(this);

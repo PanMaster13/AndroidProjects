@@ -20,7 +20,7 @@ public class DbHandler extends SQLiteOpenHelper {
     private static ArrayList<TaskObject> taskObjectList;
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "taskOject_database", TABLE_NAME = "taskObject_table";
+    private static final String DATABASE_NAME = "taskObject_database", TABLE_NAME = "taskObject_table";
 
     private static final String KEY_ID = "id", KEY_TITLE = "title", KEY_DUE_DATE = "due_date", KEY_DETAILS = "details", KEY_PRIORITY = "priority", KEY_COMPLETION_STATUS = "completion_status";
 

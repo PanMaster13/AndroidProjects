@@ -37,6 +37,7 @@ public class AddTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Add Task");
         setContentView(R.layout.activity_add_task);
 
         textView_date = findViewById(R.id.dueDate_box);
@@ -93,7 +94,6 @@ public class AddTaskActivity extends AppCompatActivity {
             } catch (ParseException e){
                 e.printStackTrace();
             }
-            alarm(date);
             handler.addTaskObject(object);
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -101,18 +101,5 @@ public class AddTaskActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void alarm(Date due_date){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DATE, due_date.getDate());
-        calendar.set(Calendar.HOUR_OF_DAY, 24);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, MyReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        Objects.requireNonNull(alarmManager).set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 }
