@@ -29,6 +29,7 @@ public class OverdueTasks extends AppCompatActivity implements TaskObjectAdapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Overdue Task");
         setContentView(R.layout.activity_overdue_tasks);
 
         handler = new DbHandler(this);
