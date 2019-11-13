@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-public class AlarmNotificationReceiver extends BroadcastReceiver {
+public class AlarmNotificationReceiver extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {

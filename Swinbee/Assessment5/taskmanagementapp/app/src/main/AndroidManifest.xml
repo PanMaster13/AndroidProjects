@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.taskmanagementapp">
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +22,11 @@
             </intent-filter>
         </activity>
         <receiver android:name=".AlarmNotificationReceiver"
-            android:enabled="true"></receiver>
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.DISPLAY_NOTIFICATION"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

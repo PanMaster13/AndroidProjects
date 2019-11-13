@@ -77,12 +77,13 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
             }
         });
 
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmNotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
-        manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        calendar.add(Calendar.SECOND, 5);
+        Intent intent = new Intent("android.intent.action.DISPLAY_NOTIFICATION");
+        PendingIntent broadcastIntent = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), broadcastIntent);
     }
 
     private void addDatabase(){
