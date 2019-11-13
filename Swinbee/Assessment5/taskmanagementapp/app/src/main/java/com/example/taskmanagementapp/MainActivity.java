@@ -105,7 +105,8 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
                 long day_difference = (calendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / (24 * 60 * 60 * 1000);
-                if (day_difference < 1){
+                long hours_difference = (calendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / (60 * 60 * 1000);
+                if ((day_difference < 1) && (hours_difference > 0)){
                     dueInOneDayCounter++;
                 }
             } catch (ParseException e){

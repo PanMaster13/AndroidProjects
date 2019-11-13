@@ -12,20 +12,32 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button start_btn, stop_btn;
     private EditText editText;
-    private TextView test_textView;
     private BroadcastReceiver broadcastReceiver;
+    private String url = "http://192.168.56.1/OTHERS/task2Files/script.php";
+    public static final String NOTIFICATION="NOTIFICATION FROM SERVICE";
+    public static final String COORDINATES = "MSG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         start_btn = findViewById(R.id.start_btn);
         stop_btn = findViewById(R.id.stop_btn);
         editText = findViewById(R.id.editText_minute);
-        test_textView = findViewById(R.id.test_textView);
         if (!runtime_permissions()){
             enable_buttons();
         }
@@ -48,11 +59,45 @@ public class MainActivity extends AppCompatActivity {
             broadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    test_textView.append("\n" + intent.getExtras().get("coordinates"));
+                    String coordinates = String.valueOf(intent.getExtras().get(COORDINATES));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
+                    String currentDate = dateFormat.format(new Date());
+                    String currentTime = timeFormat.format(new Date());
+                    final String text = currentDate + " " + currentTime + " " + coordinates + "\n";
+                    try{
+                        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Log.d("Response", response);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d("Error.Response", "Failed to request to server!");
+                                    }
+                                }
+                        ){
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("request", "YES");
+                                params.put("text", text);
+
+                                return params;
+                            }
+                        };
+                        queue.add(postRequest);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             };
         }
-        registerReceiver(broadcastReceiver, new IntentFilter("location_update"));
+        registerReceiver(broadcastReceiver, new IntentFilter(NOTIFICATION));
     }
 
     @Override
@@ -68,10 +113,17 @@ public class MainActivity extends AppCompatActivity {
         start_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startIntent = new Intent(getApplicationContext(), Gps_Service.class);
-                startService(startIntent);
-                stop_btn.setEnabled(true);
-                start_btn.setEnabled(false);
+                if (!editText.getText().toString().isEmpty()){
+                    int millisecond = Integer.parseInt(editText.getText().toString()) * 60000;
+                    stop_btn.setEnabled(true);
+                    start_btn.setEnabled(false);
+                    Intent startIntent = new Intent(getApplicationContext(), Gps_Service.class);
+                    startIntent.putExtra("Minutes", millisecond);
+                    startService(startIntent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Please enter a value for minute!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

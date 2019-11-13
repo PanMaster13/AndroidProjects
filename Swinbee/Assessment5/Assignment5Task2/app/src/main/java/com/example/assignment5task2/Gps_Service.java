@@ -15,24 +15,37 @@ import androidx.annotation.Nullable;
 
 public class Gps_Service extends Service {
 
+    public static final String NOTIFICATION="NOTIFICATION FROM SERVICE";
+    public static final String REPLY_TYPE = "TYPE";
+    public static final String COORDINATES = "MSG";
+
+    private int millisecond;
     private LocationListener locationListener;
     private LocationManager locationManager;
+
+    public Gps_Service(){}
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
     }
 
     @SuppressLint("MissingPermission")
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        millisecond = (int)intent.getExtras().get("Minutes");
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Intent intent = new Intent("location_update");
-                intent.putExtra("coordinates", location.getLongitude() + " " + location.getLatitude());
+                Intent intent = new Intent(NOTIFICATION);
+                intent.putExtra(REPLY_TYPE, "GAE");
+                intent.putExtra(COORDINATES, "Longitude: " + location.getLongitude() + " Latitude: " + location.getLatitude());
                 sendBroadcast(intent);
             }
 
@@ -55,9 +68,10 @@ public class Gps_Service extends Service {
         };
 
         locationManager = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        // Surpressed
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
+        // Suppressed
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, millisecond, 0, locationListener);
 
+        return START_NOT_STICKY;
     }
 
     @Override
