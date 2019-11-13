@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
             }
         }
         sortTaskByDates(pending);
+        sortTaskByDates(overdue);
 
         pending.addAll(overdue);
 
