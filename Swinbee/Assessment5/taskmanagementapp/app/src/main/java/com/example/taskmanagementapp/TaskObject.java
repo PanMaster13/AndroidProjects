@@ -7,8 +7,6 @@ public class TaskObject implements Parcelable {
     private int id;
     private String title, due_date, details, priority, completion_status;
 
-    public TaskObject(){};
-
     public TaskObject(int id, String title, String due_date, String details, String priority, String completion_status) {
         this.id = id;
         this.title = title;

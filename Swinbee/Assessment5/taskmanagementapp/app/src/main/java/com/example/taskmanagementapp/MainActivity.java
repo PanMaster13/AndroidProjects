@@ -2,16 +2,12 @@ package com.example.taskmanagementapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,17 +72,10 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
                 return true;
             }
         });
-
-        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 5);
-        Intent intent = new Intent("android.intent.action.DISPLAY_NOTIFICATION");
-        PendingIntent broadcastIntent = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), broadcastIntent);
     }
 
     private void addDatabase(){
+        int dueInOneDayCounter = 0;
         pendingList = handler.getAllPending();
         overdueList = handler.getOverdueTaskObjects();
 
@@ -104,15 +93,41 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
                 overdue.add(object);
             }
         }
+
         sortTaskByDates(pending);
         sortTaskByDates(overdue);
-
         pending.addAll(overdue);
+
+        for (int x = 0; x < pending.size(); x++){
+            SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+            try{
+                Date date = format.parse(pending.get(x).getDue_date());
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                long day_difference = (calendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / (24 * 60 * 60 * 1000);
+                if (day_difference < 1){
+                    dueInOneDayCounter++;
+                }
+            } catch (ParseException e){
+                e.printStackTrace();
+            }
+        }
 
         RecyclerView recyclerView = findViewById(R.id.task_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         TaskObjectAdapter adapter = new TaskObjectAdapter(this, pending);
         recyclerView.setAdapter(adapter);
+
+        if (dueInOneDayCounter > 0){
+            AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.SECOND, 5);
+            Intent intent = new Intent("android.intent.action.DISPLAY_NOTIFICATION");
+            intent.putExtra("Value", String.valueOf(dueInOneDayCounter));
+            PendingIntent broadcastIntent = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), broadcastIntent);
+        }
     }
 
     @Override

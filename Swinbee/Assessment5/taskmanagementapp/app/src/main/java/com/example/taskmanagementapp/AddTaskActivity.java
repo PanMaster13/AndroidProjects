@@ -2,10 +2,7 @@ package com.example.taskmanagementapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 public class AddTaskActivity extends AppCompatActivity {
 

@@ -16,9 +16,6 @@ import java.util.Locale;
 
 public class DbHandler extends SQLiteOpenHelper {
 
-    private Context context;
-    private static ArrayList<TaskObject> taskObjectList;
-
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "taskObject_database", TABLE_NAME = "taskObject_table";
 
@@ -71,19 +68,6 @@ public class DbHandler extends SQLiteOpenHelper {
     public void deleteTaskObject(TaskObject object){
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(TABLE_NAME, KEY_ID + "=?", new String[]{String.valueOf(object.getId())});
-    }
-
-    public TaskObject getTaskObject(int objectID){
-        TaskObject object = null;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, new String[]{KEY_ID, KEY_TITLE, KEY_DUE_DATE, KEY_DETAILS, KEY_PRIORITY, KEY_COMPLETION_STATUS}, KEY_ID + "=?", new String[]{String.valueOf(objectID)}, null, null, null, null);
-
-        if (cursor != null){
-            cursor.moveToFirst();
-            object = new TaskObject(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
-            cursor.close();
-        }
-        return object;
     }
 
     public ArrayList<TaskObject> getAllTaskObjects(){

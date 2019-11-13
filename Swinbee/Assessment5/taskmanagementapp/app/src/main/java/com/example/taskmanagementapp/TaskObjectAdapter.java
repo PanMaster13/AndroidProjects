@@ -73,7 +73,7 @@ public class TaskObjectAdapter extends RecyclerView.Adapter<TaskObjectAdapter.Vi
                 holder.date_day.setTextColor(Color.parseColor("#F64242"));
                 holder.date_month.setTextColor(Color.parseColor("#F64242"));
                 holder.title_display.setTextColor(Color.parseColor("#F64242"));
-            } else if (days_difference <= 1){
+            } else if (days_difference < 1){
                 holder.title_icon.setImageResource(R.drawable.clipboard_orange1);
                 remaining_time_text = days_difference + " days " + hours_difference + " hours";
                 holder.remaining_time.setText(remaining_time_text);

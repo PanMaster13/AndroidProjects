@@ -19,12 +19,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Locale;
 
-public class CompletedTasks extends AppCompatActivity {
+public class CompletedTasks extends AppCompatActivity implements Completed_TaskObjectAdapter.OnUpdateDB{
 
     private DbHandler handler;
     private ArrayList<TaskObject> allTaskList;
     private BottomNavigationView bottomNavigationView;
-
+    ArrayList<TaskObject> completedTaskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class CompletedTasks extends AppCompatActivity {
 
     private void readDatabase(){
         allTaskList = handler.getAllTaskObjects();
-        ArrayList<TaskObject> completedTaskList = new ArrayList<>();
+        completedTaskList = new ArrayList<>();
 
         for (TaskObject object: allTaskList){
             if (object.getCompletion_status().equals("Completed")){
@@ -87,5 +87,11 @@ public class CompletedTasks extends AppCompatActivity {
                 return 0;
             }
         });
+    }
+
+    @Override
+    public void updateDB() {
+        completedTaskList.clear();
+        readDatabase();
     }
 }
