@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button start_btn, stop_btn;
     private EditText editText;
     private BroadcastReceiver broadcastReceiver;
-    private String url = "http://192.168.56.1/OTHERS/task2Files/script.php";
+    private String url = "http://172.17.13.143/OTHERS/task2Files/script.php";
     public static final String NOTIFICATION="NOTIFICATION FROM SERVICE";
     public static final String COORDINATES = "MSG";
 

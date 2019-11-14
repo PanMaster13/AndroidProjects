@@ -20,11 +20,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
-
 
 public class MainActivity extends AppCompatActivity implements TaskObjectAdapter.OnUpdateDB {
 
@@ -94,8 +91,6 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
             }
         }
 
-        sortTaskByDates(pending);
-        sortTaskByDates(overdue);
         pending.addAll(overdue);
 
         for (int x = 0; x < pending.size(); x++){
@@ -120,46 +115,13 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
         recyclerView.setAdapter(adapter);
 
         if (dueInOneDayCounter > 0){
-            AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.SECOND, 5);
-            Intent intent = new Intent("android.intent.action.DISPLAY_NOTIFICATION");
-            intent.putExtra("Value", String.valueOf(dueInOneDayCounter));
-            PendingIntent broadcastIntent = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), broadcastIntent);
         }
     }
 
     @Override
     public void updateDB() {
         pending.clear();
+        overdue.clear();
         addDatabase();
-    }
-
-    private void sortTaskByDates(ArrayList<TaskObject> taskList){
-        final SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-        for(TaskObject object: taskList){
-            Date date = null;
-            try {
-                date = format.parse(object.getDue_date());
-            } catch (ParseException e){
-                e.printStackTrace();
-            }
-            if (new Date().before(date)){
-                Collections.sort(taskList, new Comparator<TaskObject>() {
-                    @Override
-                    public int compare(TaskObject object1, TaskObject object2) {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-                        try {
-                            return dateFormat.parse(object1.getDue_date()).compareTo(dateFormat.parse(object2.getDue_date()));
-                        } catch (ParseException e){
-                            e.printStackTrace();
-                        }
-                        return 0;
-                    }
-                });
-            }
-        }
     }
 }

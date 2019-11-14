@@ -17,6 +17,7 @@ public class AlarmNotificationReceiver extends BroadcastReceiver{
         intent = new Intent(context, MainActivity.class);
         context.startService(intent);
 
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "channel_01")
                 .setSmallIcon(R.drawable.blue_calendar_icon).setWhen(System.currentTimeMillis())
                 .setContentTitle("Notice from Task Management App!").setContentText(notification_msg);

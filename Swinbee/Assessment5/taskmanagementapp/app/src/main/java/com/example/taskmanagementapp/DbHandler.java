@@ -89,7 +89,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     public ArrayList<TaskObject> getOverdueTaskObjects(){
         ArrayList<TaskObject> objectList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + KEY_DUE_DATE + " ASC";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -112,7 +112,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     public ArrayList<TaskObject> getAllPending(){
         ArrayList<TaskObject> objectList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + KEY_DUE_DATE + " ASC";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
