@@ -67,26 +67,10 @@ public class CompletedTasks extends AppCompatActivity implements Completed_TaskO
             }
         }
 
-        sortDate(completedTaskList);
         RecyclerView completedView = findViewById(R.id.completed_recycle_view);
         completedView.setLayoutManager(new LinearLayoutManager(this));
         Completed_TaskObjectAdapter adapter = new Completed_TaskObjectAdapter(this, completedTaskList);
         completedView.setAdapter(adapter);
-    }
-
-    private void sortDate(ArrayList<TaskObject> list){
-        Collections.sort(list, new Comparator<TaskObject>() {
-            SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-            @Override
-            public int compare(TaskObject object1, TaskObject object2) {
-                try {
-                    return format.parse(object1.getDue_date()).compareTo(format.parse(object2.getDue_date()));
-                } catch (ParseException e){
-                    e.printStackTrace();
-                }
-                return 0;
-            }
-        });
     }
 
     @Override

@@ -67,7 +67,6 @@ public class OverdueTasks extends AppCompatActivity implements TaskObjectAdapter
             }
         }
 
-        sortDate(overdue);
         RecyclerView recyclerView = findViewById(R.id.overdue_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         TaskObjectAdapter adapter = new TaskObjectAdapter(this, overdue);
@@ -78,20 +77,5 @@ public class OverdueTasks extends AppCompatActivity implements TaskObjectAdapter
     public void updateDB() {
         overdue.clear();
         addDatabase();
-    }
-
-    private void sortDate(ArrayList<TaskObject> list){
-        Collections.sort(list, new Comparator<TaskObject>() {
-            SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-            @Override
-            public int compare(TaskObject object1, TaskObject object2) {
-                try {
-                    return format.parse(object1.getDue_date()).compareTo(format.parse(object2.getDue_date()));
-                } catch (ParseException e){
-                    e.printStackTrace();
-                }
-                return 0;
-            }
-        });
     }
 }

@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
     }
 
     private void addDatabase(){
-        int dueInOneDayCounter = 0;
         pendingList = handler.getAllPending();
         overdueList = handler.getOverdueTaskObjects();
 
@@ -90,32 +89,12 @@ public class MainActivity extends AppCompatActivity implements TaskObjectAdapter
                 overdue.add(object);
             }
         }
-
         pending.addAll(overdue);
-
-        for (int x = 0; x < pending.size(); x++){
-            SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-            try{
-                Date date = format.parse(pending.get(x).getDue_date());
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date);
-                long day_difference = (calendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / (24 * 60 * 60 * 1000);
-                long hours_difference = (calendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / (60 * 60 * 1000);
-                if ((day_difference < 1) && (hours_difference > 0)){
-                    dueInOneDayCounter++;
-                }
-            } catch (ParseException e){
-                e.printStackTrace();
-            }
-        }
 
         RecyclerView recyclerView = findViewById(R.id.task_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         TaskObjectAdapter adapter = new TaskObjectAdapter(this, pending);
         recyclerView.setAdapter(adapter);
-
-        if (dueInOneDayCounter > 0){
-        }
     }
 
     @Override

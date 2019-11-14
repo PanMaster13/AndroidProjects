@@ -88,32 +88,36 @@ public class AddTaskActivity extends AppCompatActivity {
             TaskObject object = new TaskObject(editText_title.getText().toString(), textView_date.getText().toString(), editText_details.getText().toString(), priority, "Pending");
             SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
             try {
-                date = format.parse(textView_date.getText().toString());
+                Date deadline = format.parse(textView_date.getText().toString());
+                Calendar calculator = Calendar.getInstance();
+                calculator.setTime(deadline);
+                calculator.add(Calendar.DATE, -1);
+                date = calculator.getTime();
             } catch (ParseException e){
                 e.printStackTrace();
             }
             handler.addTaskObject(object);
-            String date[] = textView_date.getText().toString().split("-");
-            int day = Integer.parseInt(date[0]);
-            int month = Integer.parseInt(date[1]);
-            int year = Integer.parseInt(date[2]);
-            AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.YEAR, year);
-            calendar.set(Calendar.MONTH, month);
-            calendar.set(Calendar.DAY_OF_MONTH, day-1);
-            calendar.set(Calendar.HOUR_OF_DAY, 3);
-            calendar.set(Calendar.MINUTE, 13);
-            calendar.set(Calendar.SECOND, 0);
-            Intent alarm_intent = new Intent("android.intent.action.DISPLAY_NOTIFICATION");
-            PendingIntent broadcastIntent = PendingIntent.getBroadcast(this, 100, alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, broadcastIntent);
-
+            setAlarm(date, editText_title.getText().toString());
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("deprecation")
+    public void setAlarm(Date due_date, String task_title){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DATE, due_date.getDate());
+        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent("android.intent.action.DISPLAY_NOTIFICATION");
+        intent.putExtra("title", task_title);
+        PendingIntent broadcastIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), broadcastIntent);
     }
 }
